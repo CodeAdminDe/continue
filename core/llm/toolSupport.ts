@@ -118,6 +118,54 @@ export const PROVIDER_TOOL_SUPPORT: Record<string, (model: string) => boolean> =
         ].some((part) => model.toLowerCase().includes(part))
       );
     },
+
+    lmstudio: (model) => {
+      let modelName = "";
+      // Extract the model name after the last slash to support other registries
+      if (model.includes("/")) {
+        let parts = model.split("/");
+        modelName = parts[parts.length - 1];
+      } else {
+        modelName = model;
+      }
+
+      if (
+        ["vision", "math", "guard", "mistrallite", "mistral-openorca"].some(
+          (part) => modelName.toLowerCase().includes(part),
+        )
+      ) {
+        return false;
+      }
+      if (
+        [
+          "cogito",
+          "llama3.3",
+          "qwq",
+          "llama3.2",
+          "llama3.1",
+          "qwen2",
+          "qwen3",
+          "mixtral",
+          "command-r",
+          "command-a",
+          "smollm2",
+          "hermes3",
+          "athene-v2",
+          "nemotron",
+          "llama3-groq",
+          "granite3",
+          "granite-3",
+          "aya-expanse",
+          "firefunction-v2",
+          "mistral",
+          "devstral",
+        ].some((part) => modelName.toLowerCase().includes(part))
+      ) {
+        return true;
+      }
+
+      return false;
+    },    
     // https://ollama.com/search?c=tools
     ollama: (model) => {
       let modelName = "";
